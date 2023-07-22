@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include "main.h"
+
 /**
  * _putchar - Custom putchar function to write a single character to stdout
  * @c: The character to be written
@@ -11,6 +12,39 @@ int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
+
+/**
+ * handle_char - Helper function to handle the 'c' specifier
+ * @args: The va_list containing the arguments passed to _printf
+ * @printed_chars: A pointer to the counter for printed characters
+ */
+static void handle_char(va_list args, int *printed_chars)
+{
+	char c = va_arg(args, int);
+
+	_putchar(c);
+	(*printed_chars)++;
+}
+
+/**
+ * handle_string - Helper function to handle the 's' specifier
+ * @args: The va_list containing the arguments passed to _printf
+ * @printed_chars: A pointer to the counter for printed characters
+ */
+static void handle_string(va_list args, int *printed_chars)
+{
+	char *str = va_arg(args, char *);
+
+	if (!str)
+		str = "(null)";
+	while (*str)
+	{
+		_putchar(*str);
+		(*printed_chars)++;
+		str++;
+	}
+}
+
 /**
  * _printf - Custom printf function
  * @format: The format string
@@ -37,27 +71,11 @@ int _printf(const char *format, ...)
 			switch (*format)
 			{
 				case 'c':
-					{
-						char c = va_arg(args, int);
-				
-						_putchar(c);
-						printed_chars++;
-						break;
-					}
+					handle_char(args, &printed_chars);
+					break;
 				case 's':
-					{
-						char *str = va_arg(args, char *);
-					
-						if (!str)
-							str = "(null)";
-						while (*str)
-						{
-							_putchar(*str);
-							printed_chars++;
-							str++;
-						}
-						break;
-					}
+					handle_string(args, &printed_chars);
+					break;
 				case '%':
 					_putchar('%');
 					printed_chars++;
@@ -66,6 +84,7 @@ int _printf(const char *format, ...)
 					_putchar('%');
 					_putchar(*format);
 					printed_chars += 2;
+					break;
 			}
 		}
 		format++;
