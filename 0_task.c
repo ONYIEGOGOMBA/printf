@@ -3,6 +3,7 @@
 #include "main.h"
 
 /**
+ * Mwende Njeru & Brian Gomba
  * _putchar - Custom putchar function to write a single character to stdout
  * @c: The character to be written
  * Return: On success, returns the number of characters written (1)
