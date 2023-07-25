@@ -289,7 +289,7 @@ int _printf(const char *format, ...)
 					break;
 				case 'd':
 				case 'i':
-					print_decimal(args, &printed_chars);
+					printed_chars += print_decimal(args, &printed_chars);
 					break;
 				case 'u':
 					printed_chars += print_unsigned(args);
