@@ -9,7 +9,7 @@
  */
 int _putchar(char c)
 {
-    return (write(1, &c, 1));
+	return (write(1, &c, 1));
 }
 
 /**
@@ -20,8 +20,9 @@ int _putchar(char c)
  */
 int print_char(va_list args)
 {
-    char c = va_arg(args, int);
-    return _putchar(c);
+	char c = va_arg(args, int);
+
+	return (_putchar(c));
 }
 
 /**
@@ -32,20 +33,19 @@ int print_char(va_list args)
  */
 int print_string(va_list args)
 {
-    char *str = va_arg(args, char *);
-    int printed_chars = 0;
+	char *str = va_arg(args, char *);
+	int printed_chars = 0;
 
-    if (str == NULL)
-        str = "(null)";
+	if (str == NULL)
+		str = "(null)";
+	while (*str)
+	{
+	_putchar(*str);
+	printed_chars++;
+	str++;
+	}
 
-    while (*str)
-    {
-        _putchar(*str);
-        printed_chars++;
-        str++;
-    }
-
-    return printed_chars;
+	return (printed_chars);
 }
 
 /**
@@ -56,8 +56,8 @@ int print_string(va_list args)
  */
 int print_percent(__attribute__((unused)) va_list args)
 {
-    _putchar('%');
-    return 1;
+	_putchar('%');
+	return (1);
 }
 
 /**
@@ -67,36 +67,36 @@ int print_percent(__attribute__((unused)) va_list args)
  */
 int print_decimal(va_list args, int *printed_chars)
 {
-    int num = va_arg(args, int);
-    int divisor = 1;
-    int temp = num;
+	int num = va_arg(args, int);
+	int divisor = 1;
+	int temp = num;
 
-    /* Handle negative numbers */
-    if (num < 0)
-    {
-        _putchar('-');
-        (*printed_chars)++;
-        num = -num;
-    }
+	if (num < 0)
+	{
+		_putchar('-');
+		(*printed_chars)++;
+		num = -num;
+	}
 
     /* Calculate the divisor to print individual digits */
-    while (temp > 9)
-    {
-        temp /= 10;
-        divisor *= 10;
-    }
+	while (temp > 9)
+	{
+		temp /= 10;
+		divisor *= 10;
+	}
 
     /* Print individual digits */
-    while (divisor >= 1)
-    {
-        int digit = num / divisor;
-        char ch = digit + '0';
-        _putchar(ch);
-        (*printed_chars)++;
-        num %= divisor;
-        divisor /= 10;
-    }
-    return *printed_chars;
+	while (divisor >= 1)
+	{
+		int digit = num / divisor;
+		char ch = digit + '0';
+
+		_putchar(ch);
+		(*printed_chars)++;
+		num %= divisor;
+		divisor /= 10;
+	}
+	return (*printed_chars);
 }
 
 /**
@@ -107,30 +107,33 @@ int print_decimal(va_list args, int *printed_chars)
  */
 int print_unsigned(va_list args)
 {
-    unsigned int ui = va_arg(args, unsigned int);
-    unsigned int u_divisor = 1;
-    int printed_chars = 0;
+	unsigned int ui = va_arg(args, unsigned int);
+	unsigned int u_divisor = 1;
+	int printed_chars = 0;
 
     /* Calculate the divisor to print individual digits */
-    unsigned int u_temp = ui;
-    while (u_temp > 9)
-    {
-        u_temp /= 10;
-        u_divisor *= 10;
-    }
+	unsigned int u_temp = ui;
+
+	while (u_temp > 9)
+	{
+		u_temp /= 10;
+		u_divisor *= 10;
+	}
 
     /* Print individual digits */
-    while (u_divisor >= 1)
-    {
-        int u_digit = ui / u_divisor;
-        char u_ch = u_digit + '0';
-        _putchar(u_ch);
-        printed_chars++;
-        ui %= u_divisor;
-        u_divisor /= 10;
-    }
+	while (u_divisor >= 1)
+	{
+		int u_digit = ui / u_divisor;
 
-    return printed_chars;
+		char u_ch = u_digit + '0';
+
+		_putchar(u_ch);
+		printed_chars++;
+		ui %= u_divisor;
+		u_divisor /= 10;
+	}
+
+	return (printed_chars);
 }
 
 /**
@@ -141,33 +144,33 @@ int print_unsigned(va_list args)
  */
 int print_octal(va_list args)
 {
-    unsigned int ui = va_arg(args, unsigned int);
-    char octal[12];
-    int o_idx = 0;
-    int printed_chars = 0;
+	unsigned int ui = va_arg(args, unsigned int);
+	char octal[12];
+	int o_idx = 0;
+	int printed_chars = 0;
 
-    if (ui == 0)
-    {
-        _putchar('0');
-        printed_chars++;
-    }
-    else
-    {
-        while (ui != 0)
-        {
-            octal[o_idx++] = (ui % 8) + '0';
-            ui /= 8;
-        }
+	if (ui == 0)
+	{
+		_putchar('0');
+		printed_chars++;
+	}
+	else
+	{
+		while (ui != 0)
+		{
+			octal[o_idx++] = (ui % 8) + '0';
+			ui /= 8;
+		}
 
-        while (o_idx > 0)
-        {
-            o_idx--;
-            _putchar(octal[o_idx]);
-            printed_chars++;
-        }
-    }
+		while (o_idx > 0)
+		{
+			o_idx--;
+			_putchar(octal[o_idx]);
+			printed_chars++;
+		}
+	}
 
-    return printed_chars;
+	return (printed_chars);
 }
 
 /**
@@ -179,34 +182,34 @@ int print_octal(va_list args)
  */
 int print_hexadecimal(va_list args, char hex_case)
 {
-    unsigned int ui = va_arg(args, unsigned int);
-    char hex[12];
-    int h_idx = 0;
-    int printed_chars = 0;
+	unsigned int ui = va_arg(args, unsigned int);
+	char hex[12];
+	int h_idx = 0;
+	int printed_chars = 0;
 
-    if (ui == 0)
-    {
-        _putchar('0');
-        printed_chars++;
-    }
-    else
-    {
-        while (ui != 0)
-        {
-            int remainder = ui % 16;
-            hex[h_idx++] = (remainder < 10) ? (remainder + '0') : (remainder - 10 + hex_case);
-            ui /= 16;
-        }
+	if (ui == 0)
+	{
+		_putchar('0');
+		printed_chars++;
+	}
+	else
+	{
+		while (ui != 0)
+		{
+			int remainder = ui % 16;
 
-        while (h_idx > 0)
-        {
-            h_idx--;
-            _putchar(hex[h_idx]);
-            printed_chars++;
-        }
-    }
+			hex[h_idx++] = (remainder < 10) ? (remainder + '0') : (remainder - 10 + hex_case);
+			ui /= 16;
+		}
+		while (h_idx > 0)
+		{
+			h_idx--;
+			_putchar(hex[h_idx]);
+			printed_chars++;
+		}
+	}
 
-    return printed_chars;
+	return (printed_chars);
 }
 
 /**
@@ -216,36 +219,38 @@ int print_hexadecimal(va_list args, char hex_case)
  */
 int print_pointer(va_list args, int *printed_chars)
 {
-    void *ptr = va_arg(args, void *);
-    unsigned long int addr = (unsigned long int)ptr;
-    char hex[16];
-    int h_idx = 0;
+	void *ptr = va_arg(args, void *);
+	unsigned long int addr = (unsigned long int)ptr;
+	char hex[16];
+	int h_idx = 0;
 
-    _putchar('0');
-    _putchar('x');
-    (*printed_chars) += 2;
-    if (addr == 0)
-    {
-        _putchar('0');
-        (*printed_chars)++;
-    }
-    else
-    {
-        while (addr != 0)
-        {
-            int remainder = addr % 16;
-            hex[h_idx++] = (remainder < 10) ? (remainder + '0') : (remainder - 10 + 'a');
-            addr /= 16;
-        }
+	_putchar('0');
+	_putchar('x');
+	(*printed_chars) += 2;
+	if (addr == 0)
+	{
+		_putchar('0');
+		(*printed_chars)++;
+	}
 
-        while (h_idx > 0)
-        {
-            h_idx--;
-            _putchar(hex[h_idx]);
-            (*printed_chars)++;
-        }
-    }
-    return *printed_chars;
+	else
+	{
+		while (addr != 0)
+		{
+			int remainder = addr % 16;
+
+			hex[h_idx++] = (remainder < 10) ? (remainder + '0') : (remainder - 10 + 'a');
+			addr /= 16;
+		}
+
+		while (h_idx > 0)
+		{
+			h_idx--;
+			_putchar(hex[h_idx]);
+			(*printed_chars)++;
+		}
+	}
+	return (*printed_chars);
 }
 
 /**
@@ -256,58 +261,60 @@ int print_pointer(va_list args, int *printed_chars)
 int _printf(const char *format, ...)
 {
 	int printed_chars = 0;
-    va_list args;
 
-    va_start(args, format);
-    while (*format)
-    {
-        if (*format != '%')
-        {
-            _putchar(*format);
-            printed_chars++;
-        }
-        else
-        {
-            format++;
-            switch (*format)
-            {
-            case 'c':
-                printed_chars += print_char(args);
-                break;
-            case 's':
-                printed_chars += print_string(args);
-                break;
-            case '%':
-                printed_chars += print_percent(args);
-                break;
-            case 'd':
-            case 'i':
-                print_decimal(args, &printed_chars);
-                break;
-            case 'u':
-                printed_chars += print_unsigned(args);
-                break;
-            case 'o':
-                printed_chars += print_octal(args);
-                break;
-            case 'x':
-                printed_chars += print_hexadecimal(args, 'a');
-                break;
-            case 'X':
-                printed_chars += print_hexadecimal(args, 'A');
-                break;
-            case 'p':
-                print_pointer(args, &printed_chars);
-                break;
-            default:
-                _putchar('%');
-                _putchar(*format);
-                printed_chars += 2;
-                break;
-            }
-        }
-        format++;
-    }
-    va_end(args);
-    return (printed_chars);
+	va_list args;
+
+	va_start(args, format);
+	while (*format)
+	{
+		if (*format != '%')
+
+		{
+			_putchar(*format);
+			printed_chars++;
+		}
+		else
+		{
+			format++;
+			switch (*format)
+			{
+				case 'c':
+					printed_chars += print_char(args);
+					break;
+				case 's':
+					printed_chars += print_string(args);
+					break;
+				case '%':
+					printed_chars += print_percent(args);
+					break;
+				case 'd':
+				case 'i':
+					print_decimal(args, &printed_chars);
+					break;
+				case 'u':
+					printed_chars += print_unsigned(args);
+					break;
+				case 'o':
+					printed_chars += print_octal(args);
+					break;
+				case 'x':
+					printed_chars += print_hexadecimal(args, 'a');
+					break;
+				case 'X':
+					printed_chars += print_hexadecimal(args, 'A');
+					break;
+				case 'p':
+					print_pointer(args, &printed_chars);
+					break;
+				default:
+					_putchar('%');
+					_putchar(*format);
+					printed_chars += 2;
+					break;
+			}
+		}
+		format++;
+	}
+	va_end(args);
+	return (printed_chars);
 }
